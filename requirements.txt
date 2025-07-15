@@ -1,0 +1,10 @@
+altgraph==0.17.4
+defusedxml==0.7.1
+fonttools==4.58.4
+fpdf2==2.8.3
+macholib==1.16.3
+packaging==25.0
+pillow==11.2.1
+pyinstaller==6.14.1
+pyinstaller-hooks-contrib==2025.5
+setuptools==80.9.0

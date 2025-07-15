@@ -1,0 +1,8 @@
+pyinstaller --onefile \
+  --add-data "FreeSans.ttf:." \
+  --add-data "FreeSansBold.ttf:." \
+  --add-data "FreeSansOblique.ttf:." \
+  --add-data "FreeSansBoldOblique.ttf:." \
+  --windowed \
+  --icon=icone.ico \
+  Listing_BPE.py
