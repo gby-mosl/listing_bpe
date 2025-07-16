@@ -14,8 +14,7 @@ from abc import ABC, abstractmethod
 LOCALE_SETTINGS = 'fr_FR.UTF-8'
 DATE_FORMAT = '%Y-%m-%d'
 EDITING_DATE_FORMAT = '%d %B %Y'
-# LOGO_PATH = "C:/Users/{}/VINCI Energies/GO-OMEXOM BE-Divers BE - Documents/02-GABARITS - FONDS DE PLAN/#GENERIQUE/5- Logo/1- OMEXOM/OMEXOM_COULEURS.png"
-LOGO_PATH = "/Users/guillaume/Desktop/OMEXOM/OMEXOM_COULEURS.png"
+LOGO_PATH = "C:/Users/{}/VINCI Energies/GO-OMEXOM BE-Divers BE - Documents/02-GABARITS - FONDS DE PLAN/#GENERIQUE/5- Logo/1- OMEXOM/OMEXOM_COULEURS.png"
 PDF_OUTPUT_TEMPLATE = 'Liste BPE - {}.pdf'
 
 # Colors
@@ -23,6 +22,8 @@ BLUE_COLOR = (43, 113, 184)
 LIGHT_BLUE_COLOR = (0, 191, 220)
 YELLOW_COLOR = (252, 181, 32)
 GRAY_BACKGROUND = (240, 240, 240)
+
+user = os.getlogin().lower()
 
 
 def resource_path(relative_path):
@@ -114,7 +115,8 @@ class ProjectDocument:
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
-            filename=output_dir() / f'info.log'
+            filename=output_dir() / f'info.log',
+            encoding='utf-8',
         )
         logging.getLogger("fontTools.subset").disabled = True
         self.logger = logging.getLogger(__name__)
@@ -219,9 +221,9 @@ class ProjectDocument:
 
             self.ui_handler.show_info(
                 "Succès",
-                f'Le fichier "{output_file}" a été généré.'
+                f'Le fichier "{output_file.name}" a été généré.'
             )
-            self.logger.info(f"Document PDF généré avec succès: {output_file.name}")
+            self.logger.info(f"Document PDF généré avec succès: {output_file.name} par {user}")
 
         except PDFGenerationError as e:
             self.logger.error(f"Erreur de génération PDF: {e.message}", exc_info=e.original_error)
@@ -269,9 +271,9 @@ class ProjectDocument:
         return pdf
 
     def _add_header(self, pdf):
-        user = os.getlogin().lower()
-        # pdf.image(LOGO_PATH.format(user), 8, 6, 60)
-        pdf.image(LOGO_PATH, 8, 6, 60)
+
+        pdf.image(LOGO_PATH.format(user), 8, 6, 60)
+
         self._add_project_info(pdf)
         self._add_title_section(pdf)
 
